@@ -24,7 +24,7 @@ This Streamlit app allows users to download YouTube videos and audio directly fr
 3. **Run the Streamlit app**:
    After installing the dependencies, start the app using Streamlit:
    ```bash
-   streamlit run app.py
+   streamlit run main.py
    ```
 
 4. **Access the app**:
