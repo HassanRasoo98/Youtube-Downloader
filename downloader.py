@@ -1,6 +1,12 @@
+import json
 import os
-import streamlit as st
+from datetime import datetime
 from pytubefix import YouTube
+
+if not os.path.exists('history.json'):
+    data = {'history': []}
+    with open('history.json', 'w') as f:
+        json.dump(data, f, indent=2)
 
 # Function to download video
 def download_video(url, output_path='.'):
@@ -10,6 +16,21 @@ def download_video(url, output_path='.'):
     print(f"Downloading video: {video_stream.title}")
     video_stream.download(output_path=output_path)
     print(f"Video downloaded at: {output_path}/{video_stream.default_filename}")
+    
+    with open('history.json', 'r') as f:
+        data = json.load(f)
+
+    data['history'].append(
+        {
+            'title': video_stream.title,
+            'type': 'video',
+            'link': url,
+            'download_time': datetime.now().strftime("%d%m%Y")
+        }
+    )
+    
+    with open('history.json', 'w') as f:
+        json.dump(data, f, indent=2)
 
 # Function to download audio
 def download_audio(url, output_path='.'):
@@ -17,21 +38,24 @@ def download_audio(url, output_path='.'):
     # Get the audio-only stream
     audio_stream = yt.streams.filter(only_audio=True).first()
     print(f"Downloading audio: {audio_stream.title}")
-    audio_stream.download(output_path=output_path)
-    print(f"Audio downloaded at: {output_path}/{audio_stream.default_filename}")
-    
-# Function to generate a download link
-def generate_download_link(file_path):
-    file_name = os.path.basename(file_path)
-    with open(file_path, "rb") as file:
-        btn = st.download_button(
-            label=f"Download {file_name}",
-            data=file,
-            file_name=file_name,
-            mime='application/octet-stream'
-        )
-    return btn
+    name = f"{audio_stream.title}.mp3"
+    audio_stream.download(filename=name, output_path=output_path)
+    print(f"Audio downloaded at: {output_path}/{name}")
 
+    with open('history.json', 'r') as f:
+        data = json.load(f)
+
+    data['history'].append(
+        {
+            'title': audio_stream.title,
+            'type': 'audio',
+            'link': url,
+            'download_time': datetime.now().strftime("%d-%m-%Y")
+        }
+    )
+    
+    with open('history.json', 'w') as f:
+        json.dump(data, f, indent=2)
 
 # Example usage
 if __name__ == "__main__":
