@@ -1,43 +1,27 @@
-import traceback
-import streamlit as st
-from pathlib import Path
+import os
+import sys
+import yt_dlp
 
-from downloader import *
-
-# Streamlit frontend
-st.title("YouTube Video/Audio Downloader")
-
-# Input field for YouTube video URL
-url = st.text_input("Enter the YouTube video URL:")
-
-# Output directory (using Streamlit's temporary directory)
 video_path = "video"
-audio_path = "audio"
-Path(video_path).mkdir(parents=True, exist_ok=True)
-Path(audio_path).mkdir(parents=True, exist_ok=True)
+url = sys.argv[1]
 
-# Buttons to download video or audio
-if st.button("Download Video"):
-    if url:
-        with st.spinner("Downloading video..."):
-            try:
-                video_file = download_video(url, output_path=video_path)
-                st.success(f"Video downloaded successfully!")
-                
-            except Exception as e:
-                traceback.print_exc()
-                st.error(f"Error: {e}")
-    else:
-        st.error("Please enter a valid URL.")
+def download_video(video_url, output_path='videos'):
+    ydl_opts = {
+        'outtmpl': f'{output_path}/%(title)s.%(ext)s',
+        'format': 'bestvideo+bestaudio/best',
+    }
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([video_url])
 
-if st.button("Download Audio"):
-    if url:
-        with st.spinner("Downloading audio..."):
-            try:
-                audio_file = download_audio(url, output_path=audio_path)
-                st.success(f"Audio downloaded successfully!")
-                
-            except Exception as e:
-                st.error(f"Error: {e}")
-    else:
-        st.error("Please enter a valid URL.")
+if __name__ == '__main__':
+
+    if not url:
+        print("Please Provide Valid url in argument!")
+        exit(0)
+
+    try:
+        download_video(url)
+    except Exception as e:
+        print(f"Error: {e}")
+
+

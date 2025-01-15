@@ -1,17 +1,16 @@
 # YouTube Video/Audio Downloader
 
-This Streamlit app allows users to download YouTube videos and audio directly from a provided YouTube URL. The app stores the downloaded videos and audios in the video and audio folders respectively. These folders are automatically generated from the code.
+This application allows users to download YouTube videos directly from a provided YouTube URL. The app stores the downloaded videos in the `video` folder. This folder are automatically generated from the code.
 
 ## Features
 - Download YouTube videos in the highest available resolution.
-- Download audio-only from YouTube videos.
 
 ## Steps to Run the App
 
 1. **Clone the repository**:
-    You need to have git installed on your system to run this command. Otherwise you can download the project folder as zip folder and skip this step.
+    You need to have git installed on your system to run this command. Otherwise, you can download the project folder as a zip folder and skip this step.
    ```bash
-   git clone https://github.com/HassanRasoo98/Youtube-Downloader
+   git clone https://github.com/HassanRasoo98/Youtube-Downloader.git
    cd Youtube-Downloader
    ```
 
@@ -21,32 +20,31 @@ This Streamlit app allows users to download YouTube videos and audio directly fr
    pip install -r requirements.txt
    ```
 
-3. **Run the Streamlit app**:
-   After installing the dependencies, start the app using Streamlit:
+3. **Run the application**:
+   After installing the dependencies, you can run the application using the following command:
    ```bash
-   streamlit run main.py
+   python main.py <YouTube-URL>
    ```
 
-4. **Access the app**:
-   Once the app is running, it will provide a local URL (e.g., `http://localhost:8501`). Open the provided URL in your browser to access the app.
+   - Replace `<YouTube-URL>` with the actual URL of the YouTube video you want to download.
+
+4. **Access the downloaded files**:
+   - The downloaded videos will be saved in the `videos` folder.
 
 ## How to Use the App
 
 1. **Enter a YouTube URL**:
-   - In the input field, paste the URL of the YouTube video you want to download.
+   - Provide the URL of the YouTube video you want to download as a command-line argument.
 
 2. **Download Video**:
-   - Click the "Download Video" button to download the highest resolution version of the video.
-
-3. **Download Audio**:
-   - Click the "Download Audio" button to download the audio-only version of the video.
+   - Run the command to download the highest resolution version of the video.
 
 ### Example:
-1. Paste a YouTube URL such as `https://www.youtube.com/watch?v=dQw4w9WgXcQ`.
-2. Choose whether to download the video or audio.
-3. Click the download button to save the file locally.
+1. To download a video:
+   ```bash
+   python main.py https://www.youtube.com/watch?v=dQw4w9WgXcQ
+   ```
 
 ## Dependencies
 - Python 3.7+
-- Streamlit
-- pytube
+- yt-dlp

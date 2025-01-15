@@ -3,3 +3,7 @@
 /audio
 /video
 history.json
+/env
+logs/
+videos
+.venv

@@ -1,2 +1,1 @@
-pytubefix==8.1.1
-streamlit==1.39.0
+yt-dlp
