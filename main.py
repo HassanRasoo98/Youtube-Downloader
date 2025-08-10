@@ -1,8 +1,6 @@
-import os
 import sys
 import yt_dlp
 
-video_path = "video"
 url = sys.argv[1]
 
 def download_video(video_url, output_path='videos'):
@@ -23,5 +21,6 @@ if __name__ == '__main__':
         download_video(url)
     except Exception as e:
         print(f"Error: {e}")
+
 
 
